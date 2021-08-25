@@ -16,6 +16,14 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
         href: '/swap',
       },
       {
+        label: t('Limit Order'),
+        href: '/limit-order',
+      },
+      {
+        label: t('Stop Loss'),
+        href: '/stop-loss',
+      },
+      {
         label: t('Liquidity'),
         href: '/pool',
       },

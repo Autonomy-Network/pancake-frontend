@@ -17,6 +17,8 @@ import history from './routerHistory'
 // Views included in the main bundle
 import Pools from './views/Pools'
 import Swap from './views/Swap'
+import LimitOrder from './views/Swap/LimitOrder'
+import StopLoss from './views/Swap/StopLoss'
 import {
   RedirectDuplicateTokenIds,
   RedirectOldAddLiquidityPathStructure,
@@ -117,6 +119,10 @@ const App: React.FC = () => {
             {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
             <Route exact strict path="/swap" component={Swap} />
             <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+            {/* Autonomy Routes */}
+            <Route exact strict path="/limit-order" component={LimitOrder} />
+            <Route exact strict path="/stop-loss" component={StopLoss} />
+
             <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
             <Route exact strict path="/find" component={PoolFinder} />
             <Route exact strict path="/liquidity" component={Liquidity} />

@@ -40,6 +40,13 @@ import WETH_ABI from '../config/abi/weth.json'
 import multiCallAbi from '../config/abi/Multicall.json'
 import { getContract } from '../utils'
 
+import {
+  REGISTRY_CONTRACT_ADDRESS,
+  MIDROUTER_CONTRACT_ADDRESS,
+  REGISTRY_CONTRACT_ABI,
+  MIDROUTER_CONTRACT_ABI,
+} from '../config/constants/autonomy'
+
 /**
  * Helper hooks to get specific contracts (by ABI)
  */
@@ -233,4 +240,18 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
 
 export function useMulticallContract(): Contract | null {
   return useContract(getMulticallAddress(), multiCallAbi, false)
+}
+
+export function useRegistryContract(withSignerIfPossible?: boolean): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(REGISTRY_CONTRACT_ADDRESS[chainId || ChainId.MAINNET], REGISTRY_CONTRACT_ABI, withSignerIfPossible)
+}
+
+export function useMidRouterContract(withSignerIfPossible?: boolean): Contract | null {
+  const { chainId } = useActiveWeb3React()
+  return useContract(
+    MIDROUTER_CONTRACT_ADDRESS[chainId || ChainId.MAINNET],
+    MIDROUTER_CONTRACT_ABI,
+    withSignerIfPossible,
+  )
 }

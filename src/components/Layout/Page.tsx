@@ -39,12 +39,12 @@ const PageMeta = () => {
   const pageTitle = cakePriceUsdDisplay ? [title, cakePriceUsdDisplay].join(' - ') : title
 
   return (
-    <Helmet>
+    <>
       <title>{pageTitle}</title>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
-    </Helmet>
+    </>
   )
 }
 
