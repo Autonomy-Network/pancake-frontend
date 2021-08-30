@@ -1113,9 +1113,46 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'autonomyVF_',
+        internalType: 'address payable',
+        name: 'registry_',
         type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'userVeriForwarder_',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'userFeeVeriForwarder_',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'WETH_',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'defaultFeeInfo',
+        type: 'tuple',
       },
     ],
     stateMutability: 'nonpayable',
@@ -1123,8 +1160,27 @@ export const MIDROUTER_CONTRACT_ABI = [
     name: 'constructor',
   },
   {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
     inputs: [],
-    name: 'autonomyVF',
+    name: 'WETH',
     outputs: [
       {
         internalType: 'address',
@@ -1171,6 +1227,104 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'ethToTokenLimitOrderPayDefault',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'ethToTokenLimitOrderPaySpecific',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1209,8 +1363,209 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'ethToTokenStopLossPayDefault',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'ethToTokenStopLossPaySpecific',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getDefaultFeeInfo',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'registry',
+    outputs: [
+      {
         internalType: 'address payable',
-        name: 'sender',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'newDefaultFee',
+        type: 'tuple',
+      },
+    ],
+    name: 'setDefaultFeeInfo',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
         type: 'address',
       },
       {
@@ -1252,8 +1607,116 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'address payable',
-        name: 'sender',
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToEthLimitOrderPayDefault',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToEthLimitOrderPaySpecific',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
         type: 'address',
       },
       {
@@ -1300,8 +1763,126 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'address payable',
-        name: 'sender',
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToEthStopLossPayDefault',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToEthStopLossPaySpecific',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
         type: 'address',
       },
       {
@@ -1343,8 +1924,116 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'address payable',
-        name: 'sender',
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToTokenLimitOrderPayDefault',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToTokenLimitOrderPaySpecific',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
         type: 'address',
       },
       {
@@ -1387,5 +2076,166 @@ export const MIDROUTER_CONTRACT_ABI = [
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToTokenStopLossPayDefault',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract IUniswapV2Router02',
+        name: 'uni',
+        type: 'address',
+      },
+      {
+        components: [
+          {
+            internalType: 'contract IUniswapV2Router02',
+            name: 'uni',
+            type: 'address',
+          },
+          {
+            internalType: 'address[]',
+            name: 'path',
+            type: 'address[]',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAUTO',
+            type: 'bool',
+          },
+        ],
+        internalType: 'struct UniV2LimitsStops.FeeInfo',
+        name: 'feeInfo',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'inputAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMin',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amountOutMax',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address[]',
+        name: 'path',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenToTokenStopLossPaySpecific',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'userFeeVeriForwarder',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'userVeriForwarder',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    stateMutability: 'payable',
+    type: 'receive',
   },
 ]
