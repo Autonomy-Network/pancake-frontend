@@ -5,9 +5,8 @@ import { useAllTokens } from '../../hooks/Tokens'
 import useTransactionHistory from '../../hooks/useAutonomyHistory'
 import AutoTransaction from './AutoTransaction'
 
-export default function AutoHistory(type: any) {
+export default function AutoHistory({ type }) {
   const [transactions] = useTransactionHistory()
-
   const allTokens = useAllTokens()
   const [currentTab, setCurrentTab] = useState('open')
   const mode = type

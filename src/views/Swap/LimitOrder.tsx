@@ -549,9 +549,9 @@ export default function LimitOrder({ history }: RouteComponentProps) {
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? (
-        <AdvancedSwapDetailsDropdown trade={trade} />
+        // <AdvancedSwapDetailsDropdown trade={trade} />
+        <AutoHistory type="Limit" />
       ) : (
-        // <AutoHistory type="Limit" />
         <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
       )}
     </Page>

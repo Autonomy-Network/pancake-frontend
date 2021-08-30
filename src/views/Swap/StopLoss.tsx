@@ -552,9 +552,9 @@ export default function StopLoss({ history }: RouteComponentProps) {
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? (
-        <AdvancedSwapDetailsDropdown trade={trade} />
+        // <AdvancedSwapDetailsDropdown trade={trade} />
+        <AutoHistory type="Stop" />
       ) : (
-        // <AutoHistory type="Stop" />
         <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
       )}
     </Page>

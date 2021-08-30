@@ -32,6 +32,7 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "^3.4.10",
     "@binance-chain/bsc-connector": "^1.0.0",
     "@ethersproject/experimental": "^5.0.1",
     "@pancakeswap/sdk": "^2.3.2",
@@ -60,9 +61,9 @@
     "ethers": "^5.1.4",
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",
+    "graphql-tag": "^2.12.5",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
-    "moralis": "^0.0.36",
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
     "node-fetch": "^2.6.1",
