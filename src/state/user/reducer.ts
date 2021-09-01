@@ -18,6 +18,8 @@ import {
   toggleTheme,
   updateUserFarmStakedOnly,
   FarmStakedOnly,
+  enableAutonomyPrepay,
+  disableAutonomyPrepay,
 } from './actions'
 import { GAS_PRICE_GWEI } from './hooks/helpers'
 
@@ -56,6 +58,8 @@ export interface UserState {
   isDark: boolean
   userFarmStakedOnly: FarmStakedOnly
   gasPrice: string
+
+  autonomyPrepay: boolean
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -74,6 +78,7 @@ export const initialState: UserState = {
   isDark: false,
   userFarmStakedOnly: FarmStakedOnly.ON_FINISHED,
   gasPrice: GAS_PRICE_GWEI.default,
+  autonomyPrepay: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -157,5 +162,11 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateGasPrice, (state, action) => {
       state.gasPrice = action.payload.gasPrice
+    })
+    .addCase(enableAutonomyPrepay, (state) => {
+      state.autonomyPrepay = true
+    })
+    .addCase(disableAutonomyPrepay, (state) => {
+      state.autonomyPrepay = false
     }),
 )

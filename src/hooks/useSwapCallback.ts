@@ -4,7 +4,7 @@ import { ethers } from 'ethers'
 import { JSBI, Percent, Router, Trade, TradeType } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useGasPrice } from 'state/user/hooks'
+import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
 import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../config/constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from '../utils'
@@ -102,6 +102,7 @@ export function useAutonomySwapCallArguments(
 
   const midRouterContract = useMidRouterContract()
   const registryContract = useRegistryContract()
+  const [autonomyPrepay] = useAutonomyPaymentManager()
 
   const swapCalls: SwapCall[] = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
@@ -141,8 +142,16 @@ export function useAutonomySwapCallArguments(
         case 'swapExactETHForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'ethToTokenLimitOrder' : 'ethToTokenStopLoss'
           swapArgs = [params[0], outputAmount, params[2], params[3], params[4]]
+          if (!autonomyPrepay) {
+            swapMethod = `${swapMethod}PayDefault`
+            swapArgs = [params[3], '0x0', params[0], outputAmount, params[2], params[4]]
+          }
           if (tradeLimitType === 'stop-loss') {
-            swapArgs.splice(1, 0, BigNumber.from('1'))
+            if (!autonomyPrepay) {
+              swapArgs.splice(3, 0, BigNumber.from('1'))
+            } else {
+              swapArgs.splice(1, 0, BigNumber.from('1'))
+            }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           ethForCall = value
@@ -153,18 +162,34 @@ export function useAutonomySwapCallArguments(
         case 'swapExactTokensForETHSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
           swapArgs = [account, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          if (!autonomyPrepay) {
+            swapMethod = `${swapMethod}PayDefault`
+            swapArgs = [params[4], BigNumber.from('0'), params[0], inputAmount, outputAmount, params[3], params[5]]
+          }
           if (tradeLimitType === 'stop-loss') {
-            swapArgs.splice(3, 0, BigNumber.from('1'))
+            if (!autonomyPrepay) {
+              swapArgs.splice(4, 0, BigNumber.from('1'))
+            } else {
+              swapArgs.splice(3, 0, BigNumber.from('1'))
+            }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           break
         case 'swapExactTokensForTokens':
         case 'swapTokensForExactTokens':
         case 'swapExactTokensForTokensSupportingFeeOnTransferTokens':
-          swapMethod = tradeLimitType === 'limit-order' ? 'tokenToTokenLimitOrder' : 'tokenToTokenStopLoss'
+          swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
           swapArgs = [account, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          if (!autonomyPrepay) {
+            swapMethod = `${swapMethod}PayDefault`
+            swapArgs = [params[4], BigNumber.from('0'), params[0], inputAmount, outputAmount, params[3], params[5]]
+          }
           if (tradeLimitType === 'stop-loss') {
-            swapArgs.splice(3, 0, BigNumber.from('1'))
+            if (!autonomyPrepay) {
+              swapArgs.splice(4, 0, BigNumber.from('1'))
+            } else {
+              swapArgs.splice(3, 0, BigNumber.from('1'))
+            }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           break
@@ -189,7 +214,16 @@ export function useAutonomySwapCallArguments(
         contract: registryContract,
       }
     })
-  }, [swapCalls, midRouterContract, registryContract, account, outputMinMaxAmount, trade, tradeLimitType])
+  }, [
+    swapCalls,
+    midRouterContract,
+    registryContract,
+    autonomyPrepay,
+    account,
+    outputMinMaxAmount,
+    trade,
+    tradeLimitType,
+  ])
 }
 
 // returns a function that will execute a swap, if the parameters are all valid

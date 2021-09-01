@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Text, PancakeToggle, Toggle, Flex, Modal, InjectedModalProps } from '@pancakeswap/uikit'
-import { useAudioModeManager, useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
+import {
+  useAudioModeManager,
+  useExpertModeManager,
+  useUserSingleHopOnly,
+  useAutonomyPaymentManager,
+} from 'state/user/hooks'
 import { useTranslation } from 'contexts/Localization'
 import { useSwapActionHandlers } from 'state/swap/hooks'
 import usePersistState from 'hooks/usePersistState'
@@ -27,6 +32,7 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
   const [audioPlay, toggleSetAudioMode] = useAudioModeManager()
   const { onChangeRecipient } = useSwapActionHandlers()
+  const [autonomyPrepay, togglePrepayMode] = useAutonomyPaymentManager()
 
   const { t } = useTranslation()
   const { theme } = useTheme()
@@ -98,7 +104,7 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
             }}
           />
         </Flex>
-        <Flex justifyContent="space-between" alignItems="center">
+        <Flex justifyContent="space-between" alignItems="center" mb="24px">
           <Flex alignItems="center">
             <Text>{t('Flippy sounds')}</Text>
             <QuestionHelper
@@ -110,6 +116,17 @@ const SettingsModal: React.FC<InjectedModalProps> = ({ onDismiss }) => {
           <PancakeToggleWrapper>
             <PancakeToggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
           </PancakeToggleWrapper>
+        </Flex>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Flex alignItems="center">
+            <Text>{t('Pre-pay on autonomy execution')}</Text>
+            <QuestionHelper
+              text={t('Only available for Limit Order and Stop Loss powered by Autonomy Network')}
+              placement="top-start"
+              ml="4px"
+            />
+          </Flex>
+          <Toggle checked={autonomyPrepay} scale="md" onChange={togglePrepayMode} />
         </Flex>
       </Flex>
     </Modal>

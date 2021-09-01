@@ -38,3 +38,5 @@ export const updateUserFarmStakedOnly = createAction<{ userFarmStakedOnly: FarmS
   'user/updateUserFarmStakedOnly',
 )
 export const updateGasPrice = createAction<{ gasPrice: string }>('user/updateGasPrice')
+export const enableAutonomyPrepay = createAction<void>('user/enableAutonomyPrepay')
+export const disableAutonomyPrepay = createAction<void>('user/disableAutonomyPrepay')
