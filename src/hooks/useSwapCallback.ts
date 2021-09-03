@@ -5,6 +5,8 @@ import { JSBI, Percent, Router, Trade, TradeType } from '@pancakeswap/sdk'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
+import getGasPrice from 'utils/getGasPrice'
+import { WBNB } from 'config/constants/tokens'
 import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../config/constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from '../utils'
@@ -79,7 +81,7 @@ function useSwapCallArguments(
     if (trade.tradeType === TradeType.EXACT_INPUT) {
       swapMethods.push(
         Router.swapCallParameters(trade, {
-          feeOnTransfer: true,
+          feeOnTransfer: false,
           allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
           recipient,
           deadline: deadline.toNumber(),
@@ -91,7 +93,7 @@ function useSwapCallArguments(
   }, [account, allowedSlippage, chainId, deadline, library, recipient, trade])
 }
 
-export function useAutonomySwapCallArguments(
+function useAutonomySwapCallArguments(
   trade: Trade | undefined, // trade to execute, required
   allowedSlippage: number = INITIAL_ALLOWED_SLIPPAGE, // in bips
   recipientAddressOrName: string | null,
@@ -207,7 +209,9 @@ export function useAutonomySwapCallArguments(
       ]
       // const wrapperCalldata = registryContract.interface.encodeFunctionData('newReq', wrapperArgs)
       // Cap original value with autonomy fee - 0.01 ether
-      const wrapperValue = BigNumber.from(value).add(ethers.utils.parseEther('0.01')).toHexString()
+      const wrapperValue = autonomyPrepay
+        ? BigNumber.from(value).add(ethers.utils.parseEther('0.01')).toHexString()
+        : BigNumber.from(value).toHexString()
 
       return {
         parameters: { methodName: 'newReq', args: wrapperArgs, value: wrapperValue },
@@ -238,6 +242,8 @@ export function useSwapCallback(
   const { account, chainId, library } = useActiveWeb3React()
   const gasPrice = useGasPrice()
 
+  const [autonomyPrepay] = useAutonomyPaymentManager()
+
   const swapCalls = useAutonomySwapCallArguments(
     trade,
     allowedSlippage,
@@ -245,6 +251,8 @@ export function useSwapCallback(
     tradeLimitType,
     outputMinMaxAmount,
   )
+
+  const routerContract = getRouterContract(chainId, library, account)
 
   const addTransaction = useTransactionAdder()
 
@@ -321,6 +329,29 @@ export function useSwapCallback(
           gasEstimate,
         } = successfulEstimation
 
+        // TODO: check Pre-pay fee vs Input Token value
+        if (!autonomyPrepay) {
+          const gasFee = BigNumber.from('300000').mul(getGasPrice())
+          const inputCurrencyDecimals = trade.inputAmount.currency.decimals || 18
+          const inputTokenAmount = ethers.utils
+            .parseEther(trade.inputAmount.toSignificant(6))
+            .div(10 ** (18 - inputCurrencyDecimals))
+          let isEligible = false
+          if (trade.route.path[0].address === WBNB.address) {
+            // In case input token is BNB
+            isEligible = inputTokenAmount.gt(gasFee)
+          } else {
+            const [, bnbAmount] = await routerContract.getAmountsOut(inputTokenAmount, [
+              trade.route.path[0].address,
+              WBNB.address,
+            ])
+            isEligible = (bnbAmount as BigNumber).gt(gasFee)
+          }
+          if (!isEligible) {
+            throw new Error('Insufficient input token amount')
+          }
+        }
+
         return contract[methodName](...args, {
           gasLimit: calculateGasMargin(gasEstimate),
           gasPrice,
@@ -361,5 +392,17 @@ export function useSwapCallback(
       },
       error: null,
     }
-  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction, gasPrice])
+  }, [
+    trade,
+    library,
+    account,
+    chainId,
+    recipient,
+    routerContract,
+    recipientAddressOrName,
+    swapCalls,
+    addTransaction,
+    gasPrice,
+    autonomyPrepay,
+  ])
 }
