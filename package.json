@@ -64,6 +64,7 @@
     "graphql-tag": "^2.12.5",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
+    "moralis": "^0.0.42",
     "multicodec": "^2.0.0",
     "multihashes": "^3.0.1",
     "node-fetch": "^2.6.1",
