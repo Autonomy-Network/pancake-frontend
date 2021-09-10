@@ -24,13 +24,8 @@ export const REGISTRY_CONTRACT_ABI = [
   {
     inputs: [
       {
-        internalType: 'contract IERC20',
-        name: 'AUTO',
-        type: 'address',
-      },
-      {
         internalType: 'contract IStakeManager',
-        name: 'staker',
+        name: 'stakeMan',
         type: 'address',
       },
       {
@@ -53,6 +48,21 @@ export const REGISTRY_CONTRACT_ABI = [
         name: 'userGasForwarder',
         type: 'address',
       },
+      {
+        internalType: 'string',
+        name: 'tokenName',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'tokenSymbol',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: 'totalAUTOSupply',
+        type: 'uint256',
+      },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
@@ -68,8 +78,8 @@ export const REGISTRY_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
-        indexed: false,
-        internalType: 'address payable',
+        indexed: true,
+        internalType: 'address',
         name: 'user',
         type: 'address',
       },
@@ -121,8 +131,27 @@ export const REGISTRY_CONTRACT_ABI = [
         name: 'payWithAUTO',
         type: 'bool',
       },
+      {
+        indexed: false,
+        internalType: 'bool',
+        name: 'isAlive',
+        type: 'bool',
+      },
     ],
     name: 'HashedReqAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+    ],
+    name: 'HashedReqCancelled',
     type: 'event',
   },
   {
@@ -137,11 +166,11 @@ export const REGISTRY_CONTRACT_ABI = [
       {
         indexed: false,
         internalType: 'bool',
-        name: 'wasExecuted',
+        name: 'wasRemoved',
         type: 'bool',
       },
     ],
-    name: 'HashedReqRemoved',
+    name: 'HashedReqExecuted',
     type: 'event',
   },
   {
@@ -166,14 +195,27 @@ export const REGISTRY_CONTRACT_ABI = [
         name: 'id',
         type: 'uint256',
       },
+    ],
+    name: 'HashedReqUnveriCancelled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
       {
         indexed: false,
         internalType: 'bool',
-        name: 'wasExecuted',
+        name: 'wasRemoved',
         type: 'bool',
       },
     ],
-    name: 'HashedReqUnveriRemoved',
+    name: 'HashedReqUnveriExecuted',
     type: 'event',
   },
   {
@@ -295,6 +337,11 @@ export const REGISTRY_CONTRACT_ABI = [
             name: 'payWithAUTO',
             type: 'bool',
           },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
+            type: 'bool',
+          },
         ],
         internalType: 'struct IRegistry.Request',
         name: 'r',
@@ -358,6 +405,11 @@ export const REGISTRY_CONTRACT_ABI = [
           {
             internalType: 'bool',
             name: 'payWithAUTO',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
             type: 'bool',
           },
         ],
@@ -433,6 +485,11 @@ export const REGISTRY_CONTRACT_ABI = [
           {
             internalType: 'bool',
             name: 'payWithAUTO',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
             type: 'bool',
           },
         ],
@@ -511,6 +568,11 @@ export const REGISTRY_CONTRACT_ABI = [
             name: 'payWithAUTO',
             type: 'bool',
           },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
+            type: 'bool',
+          },
         ],
         internalType: 'struct IRegistry.Request',
         name: 'r',
@@ -545,10 +607,10 @@ export const REGISTRY_CONTRACT_ABI = [
   },
   {
     inputs: [],
-    name: 'getAUTO',
+    name: 'getAUTOAddr',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'address',
         name: '',
         type: 'address',
       },
@@ -865,6 +927,11 @@ export const REGISTRY_CONTRACT_ABI = [
             name: 'payWithAUTO',
             type: 'bool',
           },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
+            type: 'bool',
+          },
         ],
         internalType: 'struct IRegistry.Request',
         name: 'r',
@@ -956,6 +1023,11 @@ export const REGISTRY_CONTRACT_ABI = [
           {
             internalType: 'bool',
             name: 'payWithAUTO',
+            type: 'bool',
+          },
+          {
+            internalType: 'bool',
+            name: 'isAlive',
             type: 'bool',
           },
         ],
@@ -1088,11 +1160,65 @@ export const REGISTRY_CONTRACT_ABI = [
       },
       {
         internalType: 'bool',
-        name: 'payWithAUTO',
+        name: 'isAlive',
         type: 'bool',
       },
     ],
     name: 'newReq',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'target',
+        type: 'address',
+      },
+      {
+        internalType: 'address payable',
+        name: 'referer',
+        type: 'address',
+      },
+      {
+        internalType: 'bytes',
+        name: 'callData',
+        type: 'bytes',
+      },
+      {
+        internalType: 'uint112',
+        name: 'ethForCall',
+        type: 'uint112',
+      },
+      {
+        internalType: 'bool',
+        name: 'verifyUser',
+        type: 'bool',
+      },
+      {
+        internalType: 'bool',
+        name: 'insertFeeAmount',
+        type: 'bool',
+      },
+      {
+        internalType: 'bool',
+        name: 'payWithAUTO',
+        type: 'bool',
+      },
+      {
+        internalType: 'bool',
+        name: 'isAlive',
+        type: 'bool',
+      },
+    ],
+    name: 'newReqPaySpecific',
     outputs: [
       {
         internalType: 'uint256',
@@ -1194,6 +1320,11 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1237,6 +1368,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1272,6 +1408,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
@@ -1325,6 +1466,11 @@ export const MIDROUTER_CONTRACT_ABI = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1373,6 +1519,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1413,6 +1564,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
@@ -1569,6 +1725,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1617,6 +1778,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1657,6 +1823,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
@@ -1720,6 +1891,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1773,6 +1949,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1818,6 +1999,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
@@ -1886,6 +2072,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1934,6 +2125,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -1974,6 +2170,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
@@ -2037,6 +2238,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -2090,6 +2296,11 @@ export const MIDROUTER_CONTRACT_ABI = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract IUniswapV2Router02',
         name: 'uni',
         type: 'address',
@@ -2135,6 +2346,11 @@ export const MIDROUTER_CONTRACT_ABI = [
       {
         internalType: 'uint256',
         name: 'feeAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxGasPrice',
         type: 'uint256',
       },
       {
