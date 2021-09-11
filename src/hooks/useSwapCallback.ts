@@ -7,7 +7,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
 import getGasPrice from 'utils/getGasPrice'
 import { WBNB } from 'config/constants/tokens'
-import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../config/constants'
+import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE, MAX_GAS_PRICE } from '../config/constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from '../utils'
 import isZero from '../utils/isZero'
@@ -143,18 +143,20 @@ function useAutonomySwapCallArguments(
         case 'swapETHForExactTokens':
         case 'swapExactETHForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'ethToTokenLimitOrder' : 'ethToTokenStopLoss'
-          swapArgs = [params[0], outputAmount, params[2], params[3], params[4]]
+          swapArgs = [params[0], outputAmount, MAX_GAS_PRICE, params[2], params[3], params[4]]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [params[3], '0x0', params[0], outputAmount, params[2], params[4]]
+            swapArgs = [params[3], '0x0', MAX_GAS_PRICE, params[0], outputAmount, params[2], params[4]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(3, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             } else {
-              swapArgs.splice(1, 0, BigNumber.from('1'))
+              swapArgs.splice(2, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             }
           }
+          console.log(swapMethod)
+          console.log(swapArgs)
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           ethForCall = value
           verifySender = false
@@ -163,16 +165,16 @@ function useAutonomySwapCallArguments(
         case 'swapTokensForExactETH':
         case 'swapExactTokensForETHSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
-          swapArgs = [account, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          swapArgs = [account, params[0], MAX_GAS_PRICE, inputAmount, outputAmount, params[3], params[4], params[5]]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [params[4], BigNumber.from('0'), params[0], inputAmount, outputAmount, params[3], params[5]]
+            swapArgs = [params[4], BigNumber.from('0'), MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(4, 0, BigNumber.from('1'))
+              swapArgs.splice(5, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             } else {
-              swapArgs.splice(3, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -181,16 +183,16 @@ function useAutonomySwapCallArguments(
         case 'swapTokensForExactTokens':
         case 'swapExactTokensForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
-          swapArgs = [account, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          swapArgs = [account, params[0], MAX_GAS_PRICE, inputAmount, outputAmount, params[3], params[4], params[5]]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [params[4], BigNumber.from('0'), params[0], inputAmount, outputAmount, params[3], params[5]]
+            swapArgs = [params[4], BigNumber.from('0'), MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(4, 0, BigNumber.from('1'))
+              swapArgs.splice(5, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             } else {
-              swapArgs.splice(3, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, BigNumber.from('1')) // increased index after adding MAX_GAS_PRICE
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
