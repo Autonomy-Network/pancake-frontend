@@ -143,7 +143,7 @@ function useAutonomySwapCallArguments(
         case 'swapETHForExactTokens':
         case 'swapExactETHForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'ethToTokenLimitOrder' : 'ethToTokenStopLoss'
-          swapArgs = [MAX_GAS_PRICE ,params[0], outputAmount, params[2], params[3], params[4]]
+          swapArgs = [MAX_GAS_PRICE, params[0], outputAmount, params[2], params[3], params[4]]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [params[3], '0x0', MAX_GAS_PRICE, params[0], outputAmount, params[2], params[4]]
@@ -163,7 +163,16 @@ function useAutonomySwapCallArguments(
         case 'swapTokensForExactETH':
         case 'swapExactTokensForETHSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
-          swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          swapArgs = [
+            account,
+            MAX_GAS_PRICE,
+            params[0],
+            inputAmount,
+            outputAmount,
+            params[3],
+            params[4],
+            params[5],
+          ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
@@ -180,8 +189,17 @@ function useAutonomySwapCallArguments(
         case 'swapExactTokensForTokens':
         case 'swapTokensForExactTokens':
         case 'swapExactTokensForTokensSupportingFeeOnTransferTokens':
-          swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
-          swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[4], params[5]]
+          swapMethod = tradeLimitType === 'limit-order' ? 'tokenToTokenLimitOrder' : 'tokenToTokenStopLoss'
+          swapArgs = [
+            account,
+            MAX_GAS_PRICE,
+            params[0],
+            inputAmount,
+            outputAmount,
+            params[3],
+            params[4],
+            params[5],
+          ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
