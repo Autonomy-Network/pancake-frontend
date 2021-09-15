@@ -7,7 +7,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
 import getGasPrice from 'utils/getGasPrice'
 import { WBNB } from 'config/constants/tokens'
-import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE } from '../config/constants'
+import { BIPS_BASE, INITIAL_ALLOWED_SLIPPAGE, MAX_GAS_PRICE } from '../config/constants'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin, getRouterContract, isAddress, shortenAddress } from '../utils'
 import isZero from '../utils/isZero'
@@ -143,10 +143,10 @@ function useAutonomySwapCallArguments(
         case 'swapETHForExactTokens':
         case 'swapExactETHForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'ethToTokenLimitOrder' : 'ethToTokenStopLoss'
-          swapArgs = [BigNumber.from('1'), params[0], outputAmount, params[2], params[3], params[4]]
+          swapArgs = [MAX_GAS_PRICE, params[0], outputAmount, params[2], params[3], params[4]]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [params[3], '0x0', BigNumber.from('1'), params[0], outputAmount, params[2], params[4]]
+            swapArgs = [params[3], '0x0', MAX_GAS_PRICE, params[0], outputAmount, params[2], params[4]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
@@ -165,7 +165,7 @@ function useAutonomySwapCallArguments(
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthLimitOrder' : 'tokenToEthStopLoss'
           swapArgs = [
             account,
-            BigNumber.from('1'),
+            MAX_GAS_PRICE,
             params[0],
             inputAmount,
             outputAmount,
@@ -175,7 +175,7 @@ function useAutonomySwapCallArguments(
           ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [account, '0x0', BigNumber.from('1'), params[0], inputAmount, outputAmount, params[3], params[5]]
+            swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
@@ -192,7 +192,7 @@ function useAutonomySwapCallArguments(
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToTokenLimitOrder' : 'tokenToTokenStopLoss'
           swapArgs = [
             account,
-            BigNumber.from('1'),
+            MAX_GAS_PRICE,
             params[0],
             inputAmount,
             outputAmount,
@@ -202,7 +202,7 @@ function useAutonomySwapCallArguments(
           ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [account, '0x0', BigNumber.from('1'), params[0], inputAmount, outputAmount, params[3], params[5]]
+            swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
