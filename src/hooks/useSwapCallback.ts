@@ -204,7 +204,7 @@ function useAutonomySwapCallArguments(
         calldata,
         BigNumber.from(ethForCall),
         verifySender,
-        false,
+        true, // set insertFeeAmount as true
         false,
       ]
       // const wrapperCalldata = registryContract.interface.encodeFunctionData('newReq', wrapperArgs)
