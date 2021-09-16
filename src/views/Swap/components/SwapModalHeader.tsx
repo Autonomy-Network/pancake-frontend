@@ -15,12 +15,14 @@ export default function SwapModalHeader({
   recipient,
   showAcceptChanges,
   onAcceptChanges,
+  realOutputAmount,
 }: {
   trade: Trade
   allowedSlippage: number
   recipient: string | null
   showAcceptChanges: boolean
   onAcceptChanges: () => void
+  realOutputAmount?: string
 }) {
   const slippageAdjustedAmounts = useMemo(
     () => computeSlippageAdjustedAmounts(trade, allowedSlippage),
@@ -63,7 +65,7 @@ export default function SwapModalHeader({
                 : 'text'
             }
           >
-            {trade.outputAmount.toSignificant(6)}
+            {realOutputAmount === undefined ? trade.outputAmount.toSignificant(6) : realOutputAmount}
           </TruncatedText>
         </RowFixed>
         <RowFixed gap="0px">

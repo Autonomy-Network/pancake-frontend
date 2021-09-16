@@ -347,6 +347,8 @@ export default function LimitOrder({ history }: RouteComponentProps) {
       onConfirm={handleSwap}
       swapErrorMessage={swapErrorMessage}
       customOnDismiss={handleConfirmDismiss}
+      realSwapPrice={realPriceValue}
+      realOutputAmount={realOutputValue}
     />,
     true,
     true,

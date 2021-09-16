@@ -34,6 +34,8 @@ interface ConfirmSwapModalProps {
   onConfirm: () => void
   swapErrorMessage?: string
   customOnDismiss?: () => void
+  realSwapPrice?: string
+  realOutputAmount?: string
 }
 
 const ConfirmSwapModal: React.FC<InjectedModalProps & ConfirmSwapModalProps> = ({
@@ -48,6 +50,8 @@ const ConfirmSwapModal: React.FC<InjectedModalProps & ConfirmSwapModalProps> = (
   swapErrorMessage,
   attemptingTxn,
   txHash,
+  realSwapPrice,
+  realOutputAmount,
 }) => {
   const showAcceptChanges = useMemo(
     () => Boolean(trade && originalTrade && tradeMeaningfullyDiffers(trade, originalTrade)),
@@ -64,9 +68,10 @@ const ConfirmSwapModal: React.FC<InjectedModalProps & ConfirmSwapModalProps> = (
         recipient={recipient}
         showAcceptChanges={showAcceptChanges}
         onAcceptChanges={onAcceptChanges}
+        realOutputAmount={realOutputAmount}
       />
     ) : null
-  }, [allowedSlippage, onAcceptChanges, recipient, showAcceptChanges, trade])
+  }, [allowedSlippage, onAcceptChanges, recipient, showAcceptChanges, trade, realOutputAmount])
 
   const modalBottom = useCallback(() => {
     return trade ? (
@@ -76,9 +81,10 @@ const ConfirmSwapModal: React.FC<InjectedModalProps & ConfirmSwapModalProps> = (
         disabledConfirm={showAcceptChanges}
         swapErrorMessage={swapErrorMessage}
         allowedSlippage={allowedSlippage}
+        realSwapPrice={realSwapPrice}
       />
     ) : null
-  }, [allowedSlippage, onConfirm, showAcceptChanges, swapErrorMessage, trade])
+  }, [allowedSlippage, onConfirm, showAcceptChanges, swapErrorMessage, trade, realSwapPrice])
 
   // text to show while loading
   const pendingText = t('Swapping %amountA% %symbolA% for %amountB% %symbolB%', {

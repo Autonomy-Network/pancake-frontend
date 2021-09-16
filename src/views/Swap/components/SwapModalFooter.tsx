@@ -29,12 +29,14 @@ export default function SwapModalFooter({
   allowedSlippage,
   swapErrorMessage,
   disabledConfirm,
+  realSwapPrice,
 }: {
   trade: Trade
   allowedSlippage: number
   onConfirm: () => void
   swapErrorMessage: string | undefined
   disabledConfirm: boolean
+  realSwapPrice?: string
 }) {
   const [showInverted, setShowInverted] = useState<boolean>(false)
   const slippageAdjustedAmounts = useMemo(
@@ -59,17 +61,27 @@ export default function SwapModalFooter({
               paddingLeft: '10px',
             }}
           >
-            {formatExecutionPrice(trade, showInverted)}
-            <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
-              <AutoRenewIcon width="14px" />
-            </StyledBalanceMaxMini>
+            {realSwapPrice !== undefined ? (
+              `${realSwapPrice} ${trade.outputAmount.currency.symbol} / ${trade.inputAmount.currency.symbol}`
+            ) : (
+              <>
+                {formatExecutionPrice(trade, showInverted)}
+                <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
+                  <AutoRenewIcon width="14px" />
+                </StyledBalanceMaxMini>
+              </>
+            )}
           </Text>
         </RowBetween>
 
         <RowBetween>
           <RowFixed>
             <Text fontSize="14px">
-              {trade.tradeType === TradeType.EXACT_INPUT ? 'Minimum received' : 'Maximum sold'}
+              {realSwapPrice !== undefined
+                ? 'Current Market Output'
+                : trade.tradeType === TradeType.EXACT_INPUT
+                ? 'Minimum received'
+                : 'Maximum sold'}
             </Text>
             <QuestionHelper
               text="Your transaction will revert if there is a large, unfavorable price movement before it is confirmed."
