@@ -138,6 +138,7 @@ function useAutonomySwapCallArguments(
       let swapMethod
       let swapArgs
       let verifySender = true
+      let insertFeeAmount = false
       switch (methodName) {
         case 'swapExactETHForTokens':
         case 'swapETHForExactTokens':
@@ -147,6 +148,9 @@ function useAutonomySwapCallArguments(
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [params[3], '0x0', MAX_GAS_PRICE, params[0], outputAmount, params[2], params[4]]
+            insertFeeAmount = true
+          } else {
+            verifySender = false
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
@@ -157,7 +161,6 @@ function useAutonomySwapCallArguments(
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           ethForCall = value
-          verifySender = false
           break
         case 'swapExactTokensForETH':
         case 'swapTokensForExactETH':
@@ -167,6 +170,7 @@ function useAutonomySwapCallArguments(
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
+            insertFeeAmount = true
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
@@ -185,6 +189,7 @@ function useAutonomySwapCallArguments(
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
             swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[3], params[5]]
+            insertFeeAmount = true
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
@@ -204,7 +209,7 @@ function useAutonomySwapCallArguments(
         calldata,
         BigNumber.from(ethForCall),
         verifySender,
-        false,
+        insertFeeAmount, // set insertFeeAmount as true for Paydefault
         false,
       ]
       // const wrapperCalldata = registryContract.interface.encodeFunctionData('newReq', wrapperArgs)
