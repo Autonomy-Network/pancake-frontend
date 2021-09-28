@@ -1,6 +1,7 @@
 import { ChainId } from '@pancakeswap/sdk'
 
 type AddressMap = { [chainId: number]: string }
+type AddressList = { [chainId: number]: string[] }
 
 /**
  * Autonomy Registry Contract
@@ -18,6 +19,11 @@ export const REGISTRY_CONTRACT_ADDRESS: AddressMap = {
 export const MIDROUTER_CONTRACT_ADDRESS: AddressMap = {
   [ChainId.MAINNET]: '0x8E43C20ff7E019Ee560a04d5a80CBDDf9f70EB7D', // updated from 0x28183542e7B3467d83740c7B0D8D087D62F6598e
   [ChainId.TESTNET]: '0x57c11ED54e9980E2b02cd6C08fB317d8fF47CA4e',
+}
+
+export const TRASNFER_FEE_TOKEN_ADDRESS_LIST: AddressList = {
+  [ChainId.MAINNET]: ['0x05f2df7b3d612a23fe12162a6c996447dce728a5'],
+  [ChainId.TESTNET]: ['0x05f2df7b3d612a23fe12162a6c996447dce728a5'],
 }
 
 export const REGISTRY_CONTRACT_ABI = [

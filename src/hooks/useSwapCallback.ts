@@ -1,7 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { ethers } from 'ethers'
-import { JSBI, Percent, Router, Trade, TradeType } from '@pancakeswap/sdk'
+import { JSBI, Percent, Router, Trade, TradeType, ChainId } from '@pancakeswap/sdk'
+import { TRASNFER_FEE_TOKEN_ADDRESS_LIST } from 'config/constants/autonomy'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
@@ -68,8 +69,9 @@ function useSwapCallArguments(
     }
 
     const swapMethods = []
-
+    
     swapMethods.push(
+      // @ts-ignore
       Router.swapCallParameters(trade, {
         feeOnTransfer: false,
         allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
@@ -80,6 +82,7 @@ function useSwapCallArguments(
 
     if (trade.tradeType === TradeType.EXACT_INPUT) {
       swapMethods.push(
+        // @ts-ignore
         Router.swapCallParameters(trade, {
           feeOnTransfer: false,
           allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
@@ -154,9 +157,9 @@ function useAutonomySwapCallArguments(
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(4, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, MAX_GAS_PRICE)
             } else {
-              swapArgs.splice(2, 0, BigNumber.from('1'))
+              swapArgs.splice(2, 0, MAX_GAS_PRICE)
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -174,9 +177,9 @@ function useAutonomySwapCallArguments(
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(5, 0, BigNumber.from('1'))
+              swapArgs.splice(5, 0, MAX_GAS_PRICE)
             } else {
-              swapArgs.splice(4, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, MAX_GAS_PRICE)
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -193,9 +196,9 @@ function useAutonomySwapCallArguments(
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs.splice(5, 0, BigNumber.from('1'))
+              swapArgs.splice(5, 0, MAX_GAS_PRICE)
             } else {
-              swapArgs.splice(4, 0, BigNumber.from('1'))
+              swapArgs.splice(4, 0, MAX_GAS_PRICE)
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -354,6 +357,10 @@ export function useSwapCallback(
           }
           if (!isEligible) {
             throw new Error('It is unlikely that this amount is enough to cover the cost of execution')
+          }
+          // @ts-ignore
+          if (TRASNFER_FEE_TOKEN_ADDRESS_LIST[chainId || ChainId.MAINNET].includes(trade.inputAmount.currency.address || 'NonAddress')) {
+            throw new Error("Fee On Transfer isn't supported for limits and stops")
           }
         }
 
