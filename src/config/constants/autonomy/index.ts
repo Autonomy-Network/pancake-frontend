@@ -8,7 +8,7 @@ type AddressList = { [chainId: number]: string[] }
  * !! Only for BSC Mainnet/Testnet
  */
 export const REGISTRY_CONTRACT_ADDRESS: AddressMap = {
-  [ChainId.MAINNET]: '0xfA10ebE826a3074fDD105a83F510Ba618EBd80e1', // updated from 0xF2f9793f55c9DAA0b9ba784BC558D90e2035ba86
+  [ChainId.MAINNET]: '0x18d087F8D22D409D3CD366AF00BD7AeF0BF225Db', // updated from 0xF2f9793f55c9DAA0b9ba784BC558D90e2035ba86
   [ChainId.TESTNET]: '0x0a92B53e97D5da0ba8253c9015fFef0F9D9cd750',
 }
 
@@ -17,7 +17,7 @@ export const REGISTRY_CONTRACT_ADDRESS: AddressMap = {
  * !! Only for BSC Mainnet/Testnet
  */
 export const MIDROUTER_CONTRACT_ADDRESS: AddressMap = {
-  [ChainId.MAINNET]: '0x8E43C20ff7E019Ee560a04d5a80CBDDf9f70EB7D', // updated from 0x28183542e7B3467d83740c7B0D8D087D62F6598e
+  [ChainId.MAINNET]: '0x151394FBa85A10E7A669f07818aC408b9abb8e09', // updated from 0x28183542e7B3467d83740c7B0D8D087D62F6598e
   [ChainId.TESTNET]: '0x57c11ED54e9980E2b02cd6C08fB317d8fF47CA4e',
 }
 
