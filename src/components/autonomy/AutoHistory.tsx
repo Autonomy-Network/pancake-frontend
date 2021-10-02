@@ -7,7 +7,7 @@ import AutoTransaction from './AutoTransaction'
 
 export default function AutoHistory({ type }) {
   const [transactions] = useTransactionHistory()
-  console.log(transactions)
+  console.log('AutoHistory_transactions', transactions)
   const allTokens = useAllTokens()
   const [currentTab, setCurrentTab] = useState('open')
   const mode = type
