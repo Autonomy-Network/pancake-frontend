@@ -56,7 +56,7 @@ export default function AutoHistory({ type }) {
         {transactions.map(
           (tx: any, i: number) =>
             tx &&
-            tx.typeof === mode.type &&
+            tx.typeof === mode &&
             tx.status === currentTab && <AutoTransaction tx={tx} tokenPair={txTokenPairs[i]} />,
         )}
       </TabContent>
