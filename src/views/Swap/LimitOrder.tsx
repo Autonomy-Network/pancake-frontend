@@ -503,7 +503,7 @@ export default function LimitOrder({ history }: RouteComponentProps) {
                   width="48%"
                   id="swap-button"
                   disabled={
-                    !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
+                    !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode || limitOrderMarketStats <= 0)
                   }
                 >
                   {priceImpactSeverity > 3 && !isExpertMode
@@ -531,7 +531,7 @@ export default function LimitOrder({ history }: RouteComponentProps) {
                 }}
                 id="swap-button"
                 width="100%"
-                disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError || limitOrderMarketStats <= 0}
               >
                 {swapInputError ||
                   (priceImpactSeverity > 3 && !isExpertMode
