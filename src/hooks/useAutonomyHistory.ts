@@ -33,7 +33,7 @@ export default function useTransactionHistory() {
 
   const parseOrders = useCallback(
     (allOrders: any[]) => {
-		console.log(allOrders)
+		console.log('allOrders', allOrders)
       return allOrders
         .map((order: any) => ({
           method: methodSelector(order.get('callData')),
