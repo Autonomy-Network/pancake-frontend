@@ -33,7 +33,8 @@ export default function useTransactionHistory() {
 
   const parseOrders = useCallback(
     (allOrders: any[]) => {
-      return allOrders
+		console.log('allOrders', allOrders)
+        const filterOrders = allOrders
         .map((order: any) => ({
           method: methodSelector(order.get('callData')),
           callData: order.get('callData'),
@@ -55,6 +56,8 @@ export default function useTransactionHistory() {
           status: canCancel(order.get('uid')) ? 'cancelled' : wasExecuted(order.get('uid')) ? 'executed' : 'open',
         }))
         .filter((order: any) => order.callData.includes("cf0febd3f17cef5b47b0cd257acf6025c5bff3b7") && order.referer === REFERER_ADDRESS)
+		console.log('filterOrders', filterOrders)
+		return filterOrders
 	}, [canCancel, wasExecuted])
 
 
@@ -254,7 +257,6 @@ export default function useTransactionHistory() {
 			setOrders(registryRequests)
 			setCancels(registryCancelRequests)
 			setExecuted(registryExecutedRequests)
-      console.log(registryRequests, "@@@")
 		}
 
 		const interval = setInterval(init, 4000)
