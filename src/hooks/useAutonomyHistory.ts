@@ -54,7 +54,7 @@ export default function useTransactionHistory() {
           insertFeeAmount: order.get('insertFeeAmount'),
           status: canCancel(order.get('uid')) ? 'cancelled' : wasExecuted(order.get('uid')) ? 'executed' : 'open',
         }))
-        .filter((order: any) => order.callData.includes(ROUTER_ADDRESS.toLowerCase().substr(2)) && order.referer === REFERER_ADDRESS)
+        .filter((order: any) => order.callData.includes("cf0febd3f17cef5b47b0cd257acf6025c5bff3b7") && order.referer === REFERER_ADDRESS)
 	}, [canCancel, wasExecuted])
 
 
