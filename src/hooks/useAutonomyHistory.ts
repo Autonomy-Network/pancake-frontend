@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react'
 import Moralis from 'moralis'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { utils } from 'ethers'
-
+import { REFERER_ADDRESS } from 'config/constants/autonomy'
 import { ROUTER_ADDRESS } from 'config/constants'
 
 Moralis.initialize('BLHKY0nn6mL9HtcCnfXDjnfY3xOay6KEAXbKGY9u')
@@ -33,7 +33,6 @@ export default function useTransactionHistory() {
 
   const parseOrders = useCallback(
     (allOrders: any[]) => {
-		console.log('allOrders', allOrders)
       return allOrders
         .map((order: any) => ({
           method: methodSelector(order.get('callData')),
@@ -55,7 +54,7 @@ export default function useTransactionHistory() {
           insertFeeAmount: order.get('insertFeeAmount'),
           status: canCancel(order.get('uid')) ? 'cancelled' : wasExecuted(order.get('uid')) ? 'executed' : 'open',
         }))
-        .filter((order: any) => order.callData.includes(ROUTER_ADDRESS.toLowerCase().substr(2)))
+        .filter((order: any) => order.callData.includes(ROUTER_ADDRESS.toLowerCase().substr(2)) && order.referer === REFERER_ADDRESS)
 	}, [canCancel, wasExecuted])
 
 

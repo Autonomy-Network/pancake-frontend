@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { ethers } from 'ethers'
 import { JSBI, Percent, Router, Trade, TradeType, ChainId } from '@pancakeswap/sdk'
-import { TRASNFER_FEE_TOKEN_ADDRESS_LIST } from 'config/constants/autonomy'
+import { TRASNFER_FEE_TOKEN_ADDRESS_LIST, REFERER_ADDRESS } from 'config/constants/autonomy'
 import { useMemo } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useGasPrice, useAutonomyPaymentManager } from 'state/user/hooks'
@@ -208,7 +208,7 @@ function useAutonomySwapCallArguments(
       }
       const wrapperArgs = [
         midRouterContract.address,
-        '0x0000000000000000000000000000000000000000',
+        REFERER_ADDRESS,
         calldata,
         BigNumber.from(ethForCall),
         verifySender,

@@ -26,6 +26,8 @@ export const TRASNFER_FEE_TOKEN_ADDRESS_LIST: AddressList = {
   [ChainId.TESTNET]: ['0x05f2df7b3d612a23fe12162a6c996447dce728a5'],
 }
 
+export const REFERER_ADDRESS = "0x1000000000000000000000000000000000000000"
+
 export const REGISTRY_CONTRACT_ABI = [
   {
     inputs: [

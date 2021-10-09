@@ -35,7 +35,7 @@ export const TabContent = styled.div`
 
 export const Transaction = styled.div`
   border-radius: 12px;
-  background-color: ${({ theme }) => theme.colors.binance};
+  background-color: ${({ theme }) => theme.colors.success};
   padding: 8px 12px;
   margin-bottom: 12px;
   display: flex;
