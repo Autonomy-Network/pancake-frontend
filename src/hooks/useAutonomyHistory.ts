@@ -55,7 +55,7 @@ export default function useTransactionHistory() {
           insertFeeAmount: order.get('insertFeeAmount'),
           status: canCancel(order.get('uid')) ? 'cancelled' : wasExecuted(order.get('uid')) ? 'executed' : 'open',
         }))
-        .filter((order: any) => order.callData.includes(ROUTER_ADDRESS.toLocaleLowerCase()) && order.referer === REFERER_ADDRESS)
+        .filter((order: any) => order.callData.includes(ROUTER_ADDRESS.toLowerCase()) && order.referer === REFERER_ADDRESS)
 		console.log('filterOrders', filterOrders)
 		return filterOrders
 	}, [canCancel, wasExecuted])
