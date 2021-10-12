@@ -167,7 +167,7 @@ export default function StopLoss({ history }: RouteComponentProps) {
   const stopLossMarketStats = useMemo(() => {
     const marketOutput = trade?.outputAmount.toExact()
     if (marketOutput && outputMaxAmount) {
-      return ((Number(outputMaxAmount) - Number(marketOutput)) * 100) / Number(marketOutput)
+      return ((Number(marketOutput) - Number(outputMaxAmount)) * 100) / Number(marketOutput)
     }
     return 0
   }, [trade, outputMaxAmount])
@@ -437,8 +437,8 @@ export default function StopLoss({ history }: RouteComponentProps) {
                       />
                     </RowBetween>
                     <AutoRow justify="flex-end">
-                      <ErrorText severity={stopLossMarketStats > 0 ? 4 : 0}>
-                        {Math.abs(stopLossMarketStats).toFixed(2)}% {stopLossMarketStats > 0 ? 'above' : 'below'} market
+                      <ErrorText severity={stopLossMarketStats < 0 ? 4 : 0}>
+                        {Math.abs(stopLossMarketStats).toFixed(2)}% {stopLossMarketStats < 0 ? 'above' : 'below'} market
                         value
                       </ErrorText>
                     </AutoRow>
@@ -506,7 +506,7 @@ export default function StopLoss({ history }: RouteComponentProps) {
                   width="48%"
                   id="swap-button"
                   disabled={
-                    !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
+                    !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode || stopLossMarketStats <= 0)
                   }
                 >
                   {priceImpactSeverity > 3 && !isExpertMode
@@ -534,7 +534,7 @@ export default function StopLoss({ history }: RouteComponentProps) {
                 }}
                 id="swap-button"
                 width="100%"
-                disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError || stopLossMarketStats <= 0}
               >
                 {swapInputError ||
                   (priceImpactSeverity > 3 && !isExpertMode
