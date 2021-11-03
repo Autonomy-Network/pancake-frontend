@@ -20,6 +20,14 @@ const config: (t: ContextApi['t']) => MenuEntry[] = (t) => [
         href: '/limit-order',
       },
       {
+        label: t('Limit Order(SokuSwap)'),
+        href: 'https://sokuswap-autonomy-blush.vercel.app/bsc/#/limit-order',
+      },
+      {
+        label: t('Limit Order(ApeSwap)'),
+        href: 'https://nifty-wiles-c4d91f.netlify.app/limit-order',
+      },
+      {
         label: t('Stop Loss'),
         href: '/stop-loss',
       },
