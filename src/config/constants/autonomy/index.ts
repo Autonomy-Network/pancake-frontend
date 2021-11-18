@@ -1245,1221 +1245,742 @@ export const REGISTRY_CONTRACT_ABI = [
 
 export const MIDROUTER_CONTRACT_ABI = [
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address payable',
-        name: 'registry_',
-        type: 'address',
+        "internalType": "address payable",
+        "name": "registry_",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: 'userVeriForwarder_',
-        type: 'address',
+        "internalType": "address",
+        "name": "userVeriForwarder_",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: 'userFeeVeriForwarder_',
-        type: 'address',
+        "internalType": "address",
+        "name": "userFeeVeriForwarder_",
+        "type": "address"
       },
       {
-        internalType: 'address',
-        name: 'WETH_',
-        type: 'address',
+        "internalType": "address",
+        "name": "WETH_",
+        "type": "address"
       },
       {
-        components: [
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'defaultFeeInfo',
-        type: 'tuple',
-      },
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "defaultFeeInfo",
+        "type": "tuple"
+      }
     ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    name: 'constructor',
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-    anonymous: false,
-    inputs: [
+    "anonymous": false,
+    "inputs": [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'previousOwner',
-        type: 'address',
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
       },
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
-    name: 'OwnershipTransferred',
-    type: 'event',
+    "name": "OwnershipTransferred",
+    "type": "event"
   },
   {
-    inputs: [],
-    name: 'WETH',
-    outputs: [
+    "inputs": [],
+    "name": "WETH",
+    "outputs": [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'ethToTokenLimitOrder',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
+    "name": "ethToTokenRange",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'ethToTokenLimitOrderPayDefault',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
+    "name": "ethToTokenRangePayDefault",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        components: [
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "feeInfo",
+        "type": "tuple"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'ethToTokenLimitOrderPaySpecific',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
+    "name": "ethToTokenRangePaySpecific",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "getDefaultFeeInfo",
+    "outputs": [
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'ethToTokenStopLoss',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'ethToTokenStopLossPayDefault',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        components: [
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "",
+        "type": "tuple"
+      }
     ],
-    name: 'ethToTokenStopLossPaySpecific',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'getDefaultFeeInfo',
-    outputs: [
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
       {
-        components: [
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registry",
+    "outputs": [
+      {
+        "internalType": "address payable",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: '',
-        type: 'tuple',
-      },
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "newDefaultFee",
+        "type": "tuple"
+      }
     ],
-    stateMutability: 'view',
-    type: 'function',
+    "name": "setDefaultFeeInfo",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [],
-    name: 'owner',
-    outputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'registry',
-    outputs: [
       {
-        internalType: 'address payable',
-        name: '',
-        type: 'address',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
-        components: [
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenToEthRange",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
+    ],
+    "name": "tokenToEthRangePayDefault",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
+      },
+      {
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'newDefaultFee',
-        type: 'tuple',
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "feeInfo",
+        "type": "tuple"
       },
+      {
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'setDefaultFeeInfo',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "tokenToEthRangePaySpecific",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'tokenToEthLimitOrder',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "tokenToTokenRange",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'tokenToEthLimitOrderPayDefault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "tokenToTokenRangePayDefault",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "feeAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "maxGasPrice",
+        "type": "uint256"
       },
       {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
+        "internalType": "contract IUniswapV2Router02",
+        "name": "uni",
+        "type": "address"
       },
       {
-        components: [
+        "components": [
           {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
+            "internalType": "contract IUniswapV2Router02",
+            "name": "uni",
+            "type": "address"
           },
           {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
+            "internalType": "address[]",
+            "name": "path",
+            "type": "address[]"
           },
           {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
+            "internalType": "bool",
+            "name": "isAUTO",
+            "type": "bool"
+          }
         ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
+        "internalType": "struct UniV2LimitsStops.FeeInfo",
+        "name": "feeInfo",
+        "type": "tuple"
       },
       {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "inputAmount",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
+        "internalType": "uint256",
+        "name": "amountOutMin",
+        "type": "uint256"
       },
       {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
+        "internalType": "uint256",
+        "name": "amountOutMax",
+        "type": "uint256"
       },
       {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
+        "internalType": "address[]",
+        "name": "path",
+        "type": "address[]"
       },
+      {
+        "internalType": "uint256",
+        "name": "deadline",
+        "type": "uint256"
+      }
     ],
-    name: 'tokenToEthLimitOrderPaySpecific',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "tokenToTokenRangePaySpecific",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
     ],
-    name: 'tokenToEthStopLoss',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "userFeeVeriForwarder",
+    "outputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: 'tokenToEthStopLossPayDefault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
+    "inputs": [],
+    "name": "userVeriForwarder",
+    "outputs": [
       {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
-          },
-          {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
-          },
-          {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
-        ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
     ],
-    name: 'tokenToEthStopLossPaySpecific',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    "stateMutability": "view",
+    "type": "function"
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenLimitOrder',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenLimitOrderPayDefault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
-          },
-          {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
-          },
-          {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
-        ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenLimitOrderPaySpecific',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenStopLoss',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenStopLossPayDefault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'feeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'maxGasPrice',
-        type: 'uint256',
-      },
-      {
-        internalType: 'contract IUniswapV2Router02',
-        name: 'uni',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            internalType: 'contract IUniswapV2Router02',
-            name: 'uni',
-            type: 'address',
-          },
-          {
-            internalType: 'address[]',
-            name: 'path',
-            type: 'address[]',
-          },
-          {
-            internalType: 'bool',
-            name: 'isAUTO',
-            type: 'bool',
-          },
-        ],
-        internalType: 'struct UniV2LimitsStops.FeeInfo',
-        name: 'feeInfo',
-        type: 'tuple',
-      },
-      {
-        internalType: 'uint256',
-        name: 'inputAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMin',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountOutMax',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: 'path',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-    ],
-    name: 'tokenToTokenStopLossPaySpecific',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'userFeeVeriForwarder',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'userVeriForwarder',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    stateMutability: 'payable',
-    type: 'receive',
-  },
+    "stateMutability": "payable",
+    "type": "receive"
+  }
 ]
