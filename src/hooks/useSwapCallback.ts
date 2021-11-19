@@ -69,7 +69,7 @@ function useSwapCallArguments(
     }
 
     const swapMethods = []
-    
+
     swapMethods.push(
       // @ts-ignore
       Router.swapCallParameters(trade, {
@@ -142,25 +142,58 @@ function useAutonomySwapCallArguments(
       let swapArgs
       let verifySender = true
       let insertFeeAmount = false
-       
+
       switch (methodName) {
         case 'swapExactETHForTokens':
         case 'swapETHForExactTokens':
         case 'swapExactETHForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'ethToTokenRange' : 'ethToTokenRange'
-          swapArgs = [MAX_GAS_PRICE, params[0], params[2], outputAmount, params[3], params[4], params[5]]
-          if (!autonomyPrepay) {
+          swapArgs = [
+            MAX_GAS_PRICE,
+            params[0],
+            outputAmount,
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+            params[2], 
+            params[3],
+            params[4]
+        ]       
+           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0],params[2],  outputAmount, params[4], params[5]]
+            swapArgs = [
+              params[3],
+              '0x0',
+              MAX_GAS_PRICE,
+              params[0],
+              outputAmount,
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+              params[2],
+              params[4]
+          ]
             insertFeeAmount = true
           } else {
             verifySender = false
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], outputAmount ,params[2], params[4], params[5]]
+              swapArgs = [
+                params[3],
+                '0x0',
+                MAX_GAS_PRICE,
+                params[0],
+                BigNumber.from('0'), 
+                outputAmount,
+                params[2],
+                params[4]
+            ]
             } else {
-              swapArgs = [MAX_GAS_PRICE, params[0],  outputAmount, params[2], params[3], params[4], params[5]]
+              swapArgs = [
+                MAX_GAS_PRICE,
+                params[0],
+                BigNumber.from('0'), 
+                params[2], 
+                params[3],
+                params[4]
+            ]
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -170,19 +203,59 @@ function useAutonomySwapCallArguments(
         case 'swapTokensForExactETH':
         case 'swapExactTokensForETHSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToEthRange' : 'tokenToEthRange'
-          // params[2] is 0 if stop loss or max uint if limit 
-          swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[2], params[3], params[4], params[5]]
+
+          swapArgs = [
+            account,
+            MAX_GAS_PRICE,
+            params[0],
+            inputAmount,
+            outputAmount,
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+            params[3],
+            params[4],
+            params[5]
+        ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[2], params[3], params[5]]
+            swapArgs = [
+              account,
+              '0x0',
+              MAX_GAS_PRICE,
+              params[0],
+              inputAmount,
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+              outputAmount,
+              params[3],
+              params[5]
+          ]
             insertFeeAmount = true
           }
           if (tradeLimitType === 'stop-loss') {
-          /* since its stop loss swap arguements of max value out with min value in used in limits */
+            
             if (!autonomyPrepay) {
-              swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, params[2], outputAmount, params[3], params[5]]
+              swapArgs = [
+                account,
+                '0x0',
+                MAX_GAS_PRICE,
+                params[0],
+                inputAmount,
+                BigNumber.from('0'), 
+                outputAmount,
+                params[3],
+                params[5]
+            ]
             } else {
-              swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, params[2], outputAmount, params[3], params[4], params[5]]
+              swapArgs = [
+                account,
+                MAX_GAS_PRICE,
+                params[0],
+                inputAmount,
+                BigNumber.from('0'), 
+                outputAmount,
+                params[3],
+                params[4],
+                params[5]
+            ]
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -191,19 +264,59 @@ function useAutonomySwapCallArguments(
         case 'swapTokensForExactTokens':
         case 'swapExactTokensForTokensSupportingFeeOnTransferTokens':
           swapMethod = tradeLimitType === 'limit-order' ? 'tokenToTokenRange' : 'tokenToTokenRange'
-          swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[2], params[3], params[4], params[5]]
+          swapArgs = [
+            account,
+            MAX_GAS_PRICE,
+            params[0],
+            inputAmount,
+            outputAmount,
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint                        
+            params[3],
+            params[4],
+            params[5]
+        ]
           if (!autonomyPrepay) {
             swapMethod = `${swapMethod}PayDefault`
-            swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, outputAmount, params[2],  params[3], params[5]]
+            swapArgs = [
+              account,
+              '0x0',
+              MAX_GAS_PRICE,
+              params[0],
+              inputAmount,
+              outputAmount,
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint                            
+              params[3],
+              params[5]
+          ]
             insertFeeAmount = true
           }
           if (tradeLimitType === 'stop-loss') {
             if (!autonomyPrepay) {
-              swapArgs = [account, '0x0', MAX_GAS_PRICE, params[0], inputAmount, params[2], outputAmount,  params[3], params[5]]
+                swapArgs = [
+                    account,
+                    '0x0',
+                    MAX_GAS_PRICE,
+                    params[0],
+                    inputAmount,
+                    BigNumber.from('0'),                          
+                    outputAmount,
+                    params[3],
+                    params[5]
+                ]
             } else {
-              swapArgs = [account, MAX_GAS_PRICE, params[0], inputAmount, params[2], outputAmount, params[3], params[4], params[5]]
+                swapArgs = [
+                    account,
+                    MAX_GAS_PRICE,
+                    params[0],
+                    inputAmount,
+                    BigNumber.from('0'),                       
+                    outputAmount,
+                    params[3],
+                    params[4],
+                    params[5]
+                ]
             }
-          }
+        }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
           break
         default:
@@ -310,9 +423,8 @@ export function useSwapCallback(
                   .catch((callError) => {
                     console.error('Call threw error', call, callError)
                     const reason: string = callError.reason || callError.data?.message || callError.message
-                    const errorMessage = `The transaction cannot succeed due to error: ${
-                      reason ?? 'Unknown error, check the logs'
-                    }.`
+                    const errorMessage = `The transaction cannot succeed due to error: ${reason ?? 'Unknown error, check the logs'
+                      }.`
 
                     return { call, error: new Error(errorMessage) }
                   })
@@ -382,11 +494,10 @@ export function useSwapCallback(
             const withRecipient =
               recipient === account
                 ? base
-                : `${base} to ${
-                    recipientAddressOrName && isAddress(recipientAddressOrName)
-                      ? shortenAddress(recipientAddressOrName)
-                      : recipientAddressOrName
-                  }`
+                : `${base} to ${recipientAddressOrName && isAddress(recipientAddressOrName)
+                  ? shortenAddress(recipientAddressOrName)
+                  : recipientAddressOrName
+                }`
 
             addTransaction(response, {
               summary: withRecipient,
