@@ -152,7 +152,7 @@ function useAutonomySwapCallArguments(
             MAX_GAS_PRICE,
             params[0],
             outputAmount,
-            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'),
             params[2], 
             params[3],
             params[4]
@@ -165,7 +165,7 @@ function useAutonomySwapCallArguments(
               MAX_GAS_PRICE,
               params[0],
               outputAmount,
-              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), 
               params[2],
               params[4]
           ]
@@ -210,7 +210,7 @@ function useAutonomySwapCallArguments(
             params[0],
             inputAmount,
             outputAmount,
-            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), 
             params[3],
             params[4],
             params[5]
@@ -223,7 +223,7 @@ function useAutonomySwapCallArguments(
               MAX_GAS_PRICE,
               params[0],
               inputAmount,
-              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'),
               outputAmount,
               params[3],
               params[5]
@@ -270,7 +270,7 @@ function useAutonomySwapCallArguments(
             params[0],
             inputAmount,
             outputAmount,
-            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint                        
+            BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'),                
             params[3],
             params[4],
             params[5]
@@ -284,7 +284,7 @@ function useAutonomySwapCallArguments(
               params[0],
               inputAmount,
               outputAmount,
-              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), //this is solidity max uint                            
+              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'),                    
               params[3],
               params[5]
           ]
