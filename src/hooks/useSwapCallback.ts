@@ -165,7 +165,7 @@ function useAutonomySwapCallArguments(
               MAX_GAS_PRICE,
               params[0],
               outputAmount,
-              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), 
+              (BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935')).div(BigNumber.from(10).mul(BigNumber.from(inputAmount))),
               params[2],
               params[4]
           ]
@@ -190,10 +190,11 @@ function useAutonomySwapCallArguments(
                 MAX_GAS_PRICE,
                 params[0],
                 BigNumber.from('0'), 
+                outputAmount,
                 params[2], 
                 params[3],
                 params[4]
-            ]
+            ] 
             }
           }
           calldata = midRouterContract.interface.encodeFunctionData(swapMethod, swapArgs)
@@ -223,7 +224,7 @@ function useAutonomySwapCallArguments(
               MAX_GAS_PRICE,
               params[0],
               inputAmount,
-              BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'),
+              (BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935')).div(BigNumber.from(10).mul(BigNumber.from(inputAmount))),
               outputAmount,
               params[3],
               params[5]
@@ -284,7 +285,7 @@ function useAutonomySwapCallArguments(
                 params[0],
                 inputAmount,
                 outputAmount,
-                BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935'), /* this is solidity max uint     */                       
+                (BigNumber.from('115792089237316195423570985008687907853269984665640564039457584007913129639935')).div(BigNumber.from(10).mul(BigNumber.from(inputAmount))),                     
                 params[3],
                 params[5]
             ]
