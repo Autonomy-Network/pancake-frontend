@@ -36,3 +36,8 @@ yarn-error.log*
 debug.log*
 
 .vercel/
+
+#firebase 
+/.firebase
+/.firebaserc
+/firebase.json
