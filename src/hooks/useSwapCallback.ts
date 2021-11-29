@@ -471,9 +471,9 @@ export function useSwapCallback(
             ])
             isEligible = (bnbAmount as BigNumber).gt(gasFee)
           }
-          if (!isEligible) {
+          if (!isEligible && !window.location.href.includes('swap')) {
             throw new Error('It is unlikely that this amount is enough to cover the cost of execution')
-          }
+        }
           // @ts-ignore
           if (TRASNFER_FEE_TOKEN_ADDRESS_LIST[chainId || ChainId.MAINNET].includes(trade.inputAmount.currency.address || 'NonAddress')) {
             throw new Error("Fee On Transfer isn't supported for limits and stops")
